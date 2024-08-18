@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chateau | <%=title %>
+    </title>
+</head>
+
+<body>
+    <%- include ("headers") -%>
+        <h1>Ceci est un test</h1>
+        <% obj.name.forEach(x=>{ %>
+            <h2>
+                <%= obj.salutation + " " + x %>
+            </h2>
+            <% }) %>
+</body>
+
+</html>

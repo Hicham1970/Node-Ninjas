@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+<%- include('./Partials/head.ejs') %>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Surveyor'S Blogs | <%= title %>
-    </title>
-</head>
 
-<body>
-    <nav>
-        <div class="site-title">
-
-            <a href="/">
-                <h1>Blog Of a Draft Surveyor</h1>
-            </a>
-            <p>A Net Draft Surveyor Site</p>
-        </div>
-        <ul>
-            <li><a href="/">Blogs</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blogs/create">New Blog</a></li>
-        </ul>
-    </nav>
-    <div class="blogs content">
-        <h2>All Blogs</h2>
-        <!-- here will be our dynamic staff -->
-    </div>
-</body>
+    <body>
+        <%- include('./Partials/nav.ejs') %>
+            <div class="blogs content">
+                <h2>All Blogs</h2>
+                <!--dynamic staff -->
+                <!-- s'assurer qu'on a au moins un blog -->
+                <% if (Blogs.length> 0) { %>
+                    <% Blogs.forEach(blog=>{ %>
+                        <h3 class="title">
+                            <%=blog.title %>
+                        </h3>
+                        <p class="snippet">
+                            <%=blog.snippet %>
+                        </p>
+                        <% }) %>
+                            <% } else { %>
+                                <p> There is No Blogs yet</p>
+                                <% } %>
+            </div>
+            <%- include('./Partials/footer.ejs') %>
+    </body>
 
 </html>

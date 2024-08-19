@@ -14,7 +14,22 @@ app.listen(3000);
 
 //GET request
 app.get("/", (req, res) => {
-  res.render(path.join(__dirname, "views", "index"), { title: "Home" });
+  const Blogs = [
+    {
+      title: "Blog 1",
+      snippet: "Lorem ipsum dolor sit abet consectetur adipisicing élit.",
+    },
+    {
+      title: "Blog 2",
+      snippet: "Lorem ipsum dolor sit abet consectetur adipisicing élit.",
+    },
+    {
+      title: "Blog 3",
+      snippet: "Lorem ipsum dolor sit abet consectetur adipisicing élit.",
+    },
+  ];
+
+  res.render(path.join(__dirname, "views", "index"), { title: "Home", Blogs });
 });
 
 app.get("/about", (req, res) => {
@@ -22,7 +37,9 @@ app.get("/about", (req, res) => {
 });
 // Create
 app.get("/blogs/create", (req, res) => {
-  res.render(path.join(__dirname, "views", "create"), { title: "Create" });
+  res.render(path.join(__dirname, "views", "create"), {
+    title: "Create a New Blog",
+  });
 });
 // test
 app.get("/contact", (req, res) => {

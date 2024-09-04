@@ -4,31 +4,19 @@
 <%- include('./Partials/head.ejs') %>
 
     <body>
-        <nav>
-            <div class="site-title">
-                <a href="/">
-                    <h1>Blog Of a Draft Surveyor</h1>
-                </a>
-                <p>A Net Draft Surveyor Site</p>
+        <%- include('./Partials/nav.ejs') %>
+            <div class="create-blog content">
+                <form action="/blogs" method="post">
+                    <label for="title">Blog Title:</label>
+                    <input type="text" id="title" name="title" required>
+                    <label for="snippets">Blog Snippets:</label>
+                    <input type="text" id="snippete" name="snippet" required>
+                    <label for="body">Blog Body:</label>
+                    <textarea name="body" id="body"></textarea>
+                    <button>Submit</button>
+                </form>
             </div>
-            <ul>
-                <li><a href="/">Blogs</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/blogs/create">New Blog</a></li>
-            </ul>
-        </nav>
-        <div class="create-blog content">
-            <form>
-                <label for="title">Blog Title:</label>
-                <input type="text" id="title" name="title" required>
-                <label for="snippets">Blog Snippets:</label>
-                <input type="text" id="snippetes" required>
-                <label for="body">Blog Body:</label>
-                <textarea name="body" id="body"></textarea>
-                <button>Submit</button>
-            </form>
-        </div>
-        <%- include('./Partials/footer.ejs') %>
+            <%- include('./Partials/footer.ejs') %>
     </body>
 
 </html>

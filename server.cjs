@@ -47,12 +47,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.use(morgan("dev"));
 app.use(morgan("tiny"));
 
-// Mongoose a2nd mongo sandbox routes:
+// Mongoose and mongo sandbox routes:
 app.get("/add-blog", (req, res) => {
   const blog = new Blog({
-    title: "Last blog",
-    snippet: "about my new blog",
-    body: "more about my new blog",
+    title: "Comment utiliser mongoDB Shell ",
+    snippet: "Installer le a partir de npm",
+    body: "MongoDB shell est une bibliothèque JavaScript qui facilite l’interaction entre le local shell et MongoDB Databases",
   });
   blog
     .save()
@@ -75,7 +75,7 @@ app.get("/all-blogs", (req, res) => {
       console.log(err);
     });
 });
-
+2;
 //Get a single blog: findById
 app.get("/single-blog", (req, res) => {
   Blog.findById("66c89f94f66dca2d8383aacc")
@@ -116,21 +116,7 @@ app.get("/blogs/create", (req, res) => {
     title: "Create a New Blog",
   });
 });
-// test
-app.get("/contact", (req, res) => {
-  let d = new Date();
-  let slt = d.getHours() < 17 ? "Bonjour" : "Bonsoir";
 
-  let obj = {
-    name: ["A", "B", "C", "D", "E"],
-    salutation: slt,
-  };
-
-  res.render(path.join(__dirname, "views", "contact"), {
-    title: "Contact",
-    obj: obj,
-  });
-});
 // 2 ème middleware
 app.use((req, res, next) => {
   console.log("Je suis le middleware 2 !! ");

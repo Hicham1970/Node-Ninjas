@@ -26,56 +26,16 @@ mongoose
 
 // Register view engin : moteur de vues
 app.set("view engine", "ejs");
-// Set the path to the views folder
-// app.set("views", path.join(__dirname, "views"));
-
 // Middleware & static files comme photos ou styles.css ...
-// app.use(express.static(path.join(__dirname, "public")));
-
+app.use(express.static(path.join(__dirname, "public")));
+// express middleware takes all the url data and parse it into a request object
+// ce qui permet d'attendre req.body lors d'une post request
+app.use(express.urlencoded({ extended: true }));
 // Utiliser le middleware Morgan:
 // app.use(morgan("dev"));
 app.use(morgan("tiny"));
 
 //routes
-// add blogs
-app.get("/add-blog", (req, res) => {
-  const blog = new Blog({
-    title: "Attente interminable",
-    snippet: "Apres la dernière visite de mon ami ....",
-    body: "Je suis malade depuis 3 jours , je tousse comme un enragé, est ce possible que je suis contaminé ??",
-  });
-  blog
-    .save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-//  All the blogs :
-app.get("/all-blogs", (req, res) => {
-  Blog.find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-//Get a specific document:
-app.get("/single-blog", (req, res) => {
-  // Blog.findById(req.params.id)
-  Blog.findById("66cf1ac60f2132dd5cae89ea")
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
 app.get("/", (req, res) => {
   res.redirect("/blogs");
 });
@@ -99,32 +59,24 @@ app.get("/blogs", (req, res) => {
     });
 });
 
+// Post Request:
+app.post("/blogs", (req, res) => {
+  const blog = new Blog(req.body);
+  blog
+    .save()
+    .then((result) => {
+      res.redirect("/blogs");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 // Create
 app.get("/blogs/create", (req, res) => {
   res.render(path.join(__dirname, "views", "create"), {
     title: "Create a New Blog",
   });
-});
-
-// test
-app.get("/contact", (req, res) => {
-  let d = new Date();
-  let slt = d.getHours() < 17 ? "Bonjour" : "Bonsoir";
-
-  let obj = {
-    name: ["A", "B", "C", "D", "E"],
-    salutation: slt,
-  };
-
-  res.render("contact", {
-    title: "Contact",
-    obj: obj,
-  });
-});
-// 2 ème middleware
-app.use((req, res, next) => {
-  console.log("Je suis le middleware 2 !! ");
-  next();
 });
 
 //404 Page :

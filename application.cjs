@@ -4,13 +4,14 @@ const { title } = require("process");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const Blog = require("./Models/blog");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 //Express app
 const app = express();
 
-// Connect to MongoDB database et l'app. ne va écouter que qd la connexion est établie:
-const DbURI =
-  "mongodb+srv://surveyor:sgs123456@cluster0.1ujuvbr.mongodb.net/SurveyorBlogs?retrywrites=true&w=majority";
+const DbURI = process.env.DbURI;
 
 mongoose
   .connect(DbURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -28,11 +29,6 @@ mongoose
 app.set("view engine", "ejs");
 // Middleware & static files comme photos ou styles.css ...
 app.use(express.static(path.join(__dirname, "public")));
-// express middleware takes all the url data and parse it into a request object
-// ce qui permet d'attendre req.body lors d'une post request
-app.use(express.urlencoded({ extended: true }));
-// Utiliser le middleware Morgan:
-// app.use(morgan("dev"));
 app.use(morgan("tiny"));
 
 //routes
@@ -66,6 +62,30 @@ app.post("/blogs", (req, res) => {
     .save()
     .then((result) => {
       res.redirect("/blogs");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// Find By Id:
+app.get("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  Blog.findById(id)
+    .then((result) => {
+      res.render("details", { blog: result, title: "Blog Details" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// Delete request:
+app.delete("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  Blog.findByIdAndDelete(id)
+    .then((result) => {
+      res.json({ redirect: "/blogs" });
     })
     .catch((err) => {
       console.log(err);

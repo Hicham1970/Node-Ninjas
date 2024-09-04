@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./Partials/head.ejs') %>
+
+    <body>
+        <%- include('./Partials/nav.ejs') %>
+            <div class="details content">
+                <h2>
+                    <%= blog.title %>
+                </h2>
+                <div class="content">
+                    <p>
+                        <%= blog.body %>
+                    </p>
+                </div>
+                <a class="delete" data-doc="<%=blog._id %>">Delete</a>
+            </div>
+            <script>
+                const poubelle = document.querySelector("a.delete");
+                poubelle.addEventListener("click", (e) => {
+                    const endpoint = `/blogs/${poubelle.dataset.doc}`;
+                    fetch(endpoint, {
+                        method: "DELETE",
+                    })
+                        .then((response) => response.json())
+                        .then((data) => window.location.href = data.redirect)
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                });
+            </script>
+            <%- include('./Partials/footer.ejs') %>
+    </body>
+
+</html>

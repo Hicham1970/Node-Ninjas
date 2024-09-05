@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const { title } = require("process");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const Blog = require("./Models/blog");
@@ -28,8 +27,9 @@ mongoose
 // Register view engin : moteur de vues
 app.set("view engine", "ejs");
 // Middleware & static files comme photos ou styles.css ...
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 
 //routes
 app.get("/", (req, res) => {
@@ -68,6 +68,13 @@ app.post("/blogs", (req, res) => {
     });
 });
 
+// create:
+app.get("/blogs/create", (req, res) => {
+  res.render("create", {
+    title: "Create a New Blog",
+  });
+});
+
 // Find By Id:
 app.get("/blogs/:id", (req, res) => {
   const id = req.params.id;
@@ -80,6 +87,8 @@ app.get("/blogs/:id", (req, res) => {
     });
 });
 
+// Create
+
 // Delete request:
 app.delete("/blogs/:id", (req, res) => {
   const id = req.params.id;
@@ -90,13 +99,6 @@ app.delete("/blogs/:id", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-});
-
-// Create
-app.get("/blogs/create", (req, res) => {
-  res.render(path.join(__dirname, "views", "create"), {
-    title: "Create a New Blog",
-  });
 });
 
 //404 Page :

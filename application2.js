@@ -13,7 +13,7 @@ const app = express();
 const DbURI = process.env.DbURI;
 
 mongoose
-  .connect(DbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(DbURI)
   .then(() =>
     app.listen(3000, () => {
       console.log("Server is running on port 3000");
@@ -86,8 +86,6 @@ app.get("/blogs/:id", (req, res) => {
       console.log(err);
     });
 });
-
-// Create
 
 // Delete request:
 app.delete("/blogs/:id", (req, res) => {

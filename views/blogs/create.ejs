@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('./Partials/head.ejs') %>
+<%- include('../Partials/head.ejs') %>
 
     <body>
-        <%- include('./Partials/nav.ejs') %>
+        <%- include('../Partials/nav.ejs') %>
             <div class="create-blog content">
                 <form action="/blogs" method="post">
                     <label for="title">Blog Title:</label>
@@ -16,7 +16,7 @@
                     <button>Submit</button>
                 </form>
             </div>
-            <%- include('./Partials/footer.ejs') %>
+            <%- include('../Partials/footer.ejs') %>
     </body>
 
 </html>

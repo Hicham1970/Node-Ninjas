@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('./Partials/head.ejs') %>
+<%- include('../Partials/head.ejs') %>
 
     <body>
-        <%- include('./Partials/nav.ejs') %>
+        <%- include('../Partials/nav.ejs') %>
             <div class="details content">
                 <h2>
                     <%= blog.title %>
@@ -13,7 +13,9 @@
                         <%= blog.body %>
                     </p>
                 </div>
-                <a class="delete" data-doc="<%=blog._id %>">Delete</a>
+                <a class="delete" data-doc="<%=blog._id %>">
+                    <img src="/delete_24.svg" alt="delete icon">
+                </a>
             </div>
             <script>
                 const poubelle = document.querySelector("a.delete");
@@ -29,7 +31,7 @@
                         });
                 });
             </script>
-            <%- include('./Partials/footer.ejs') %>
+            <%- include('../Partials/footer.ejs') %>
     </body>
 
 </html>
